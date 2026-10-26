@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ sơ sinh viên - Campus</title>
+    <title>Quản lý sinh viên</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,10 +13,13 @@
 </head>
 <body class="dash-page">
 <header class="topbar">
-    <div class="container d-flex align-items-center justify-content-between">
+    <div class="container-fluid px-3 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-2">
-            <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
-            <span class="fw-bold">Campus <span class="text-muted fw-normal">/ Quản lý sinh viên</span></span>
+            <div class="brand-icon">
+                <a href="?controller=student&action=index">
+                <i class="bi bi-mortarboard-fill"></i></a>
+            </div>
+            <span class="fw-bold">Quản lý sinh viên</span>
         </div>
         <div class="d-flex align-items-center gap-3">
             <!-- Hoan: cho nay dat "Xin chao, <ten user>" + nut Dang xuat -->
@@ -25,9 +28,7 @@
 </header>
 <section class="hero">
     <div class="container">
-        <div class="hero-kicker">Trung tâm quản lý</div>
-        <h1 class="hero-title">Hồ sơ sinh viên</h1>
-        <p class="hero-sub mb-0">Theo dõi và cập nhật thông tin sinh viên tại một nơi.</p>
+        <h1 class="hero-title text-center">Danh sách sinh viên</h1>
     </div>
 </section>
 <main class="container pb-5">

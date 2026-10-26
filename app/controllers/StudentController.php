@@ -24,4 +24,17 @@ class StudentController
 
         include APP_ROOT . '/app/views/student/index.php';
     }
+
+    public function detail($id)
+    {
+        $studentService = new StudentService();
+        $student = $studentService->getStudentById($id);
+
+        if (!$student) {
+            echo "Không tìm thấy sinh viên.";
+            return;
+        }
+
+        include APP_ROOT . '/app/views/student/detail.php';
+    }
 }

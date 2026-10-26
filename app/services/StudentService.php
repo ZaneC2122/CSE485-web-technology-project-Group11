@@ -42,4 +42,21 @@ class StudentService
 
         return $stmt->fetchColumn();
     }
+
+    //Lấy ttin sinh viên thông qua id
+    public function getStudentById($id)
+    {
+        $dbConnection = new DBConnection();
+        $conn = $dbConnection->getConnection();
+
+        $sql = "SELECT *
+                FROM student s
+                LEFT JOIN students sd ON s.ma_sv = sd.ma_sv
+                WHERE s.ma_sv = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 }

@@ -112,20 +112,20 @@ body.dash-page {
     width: 38px;
     height: 38px;
     border-radius: 10px;
-    background: #9a5b43;
+    background-color: #6366f1;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+.brand-icon a {
+    color: #F9FAFB;
 }
 
-.btn-topbar {
-    background: #f3f4f6;
-    color: #374151;
-    font-weight: 600;
-    border-radius: 10px;
-    padding: 0.4rem 1.1rem;
+.brand-icon:hover {
+    background-color: #4338ca;
 }
 
 .topbar-user {
@@ -134,11 +134,6 @@ body.dash-page {
 }
 
 .topbar-user strong {
-    color: #111827;
-}
-
-.btn-topbar:hover {
-    background: #e5e7eb;
     color: #111827;
 }
 
@@ -431,4 +426,92 @@ body.dash-page {
     font-size: 1.15rem;
     font-weight: 700;
     margin: 0 0 0.5rem;
+}
+
+/* Trang chi tiết sinh viên */
+.detail-container {
+    max-width: 1000px;
+    margin: 35px auto;
+    padding: 0 16px;
+}
+
+.page-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    color: #1e1b4b;
+    font-weight: 700;
+}
+
+.page-heading p {
+    color: #6b7280;
+}
+
+.detail-card {
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(30, 35, 90, 0.08);
+    overflow: hidden;
+}
+
+.detail-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #eef0f4;
+}
+
+.detail-card-header h5 {
+    margin: 0 0 4px;
+    color: #312e81;
+    font-weight: 700;
+}
+
+.detail-card-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.detail-icon {
+    background: #e0e7ff;
+    color: #4f46e5;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 20px;
+}
+
+.detail-card-body {
+    padding: 24px;
+}
+
+.detail-card .form-control {
+    background: #f9fafb;
+}
+
+.detail-card textarea {
+    min-height: 80px;
+}
+
+.detail-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.btn-back {
+    background: #f3f4f6;
+    color: #374151;
+    border-radius: 10px;
+}
+
+.detail-actions .btn-edit {
+    padding: 10px 18px;
+    border-radius: 10px;
 }
