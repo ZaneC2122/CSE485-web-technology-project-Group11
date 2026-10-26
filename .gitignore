@@ -1,0 +1,9 @@
+# Tai khoan MySQL rieng cua tung may, khong commit
+app/config/config.local.php
+
+# Do cua trinh soan thao / he dieu hanh
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
