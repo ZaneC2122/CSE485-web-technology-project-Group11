@@ -95,6 +95,20 @@ body.auth-page {
     color: var(--indigo);
 }
 
+.auth-foot .auth-link {
+    color: var(--indigo);
+    font-weight: 700;
+}
+
+.auth-note {
+    border-top: 1px solid #eef0f4;
+    color: #8b9099;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+}
+
 /* ===== Trang dashboard ===== */
 
 body.dash-page {
@@ -293,6 +307,14 @@ body.dash-page {
     padding: 1rem;
     overflow-y: auto;
     scrollbar-gutter: stable;
+}
+
+.popup[hidden] {
+    display: none;
+}
+
+.popup-confirm-overlay {
+    align-items: center;
 }
 
 .popup-card {

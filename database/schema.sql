@@ -1,9 +1,9 @@
--- Bang 1: Tai khoan dang ky, dang nhap
+-- Tai khoan dang nhap
 CREATE TABLE users (
-id_user INT AUTO_INCREMENT PRIMARY KEY,
-ho_ten VARCHAR(100),
-email VARCHAR(100),
-mat_khau VARCHAR(100)
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    mat_khau VARCHAR(255) NOT NULL
 );
 
 -- Bang 2: Thong tin sinh vien tong quan

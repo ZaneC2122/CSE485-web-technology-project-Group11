@@ -59,4 +59,32 @@ class StudentService
 
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    public function deleteStudent($id)
+    {
+        $dbConnection = new DBConnection();
+        $conn = $dbConnection->getConnection();
+
+        $conn->beginTransaction();
+        try {
+            $deleteDetails = $conn->prepare("DELETE FROM students WHERE ma_sv = ?");
+            $deleteDetails->execute([$id]);
+
+            $deleteStudent = $conn->prepare("DELETE FROM student WHERE ma_sv = ?");
+            $deleteStudent->execute([$id]);
+
+            if ($deleteStudent->rowCount() !== 1) {
+                $conn->rollBack();
+                return false;
+            }
+
+            $conn->commit();
+            return true;
+        } catch (Throwable $exception) {
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
+            throw $exception;
+        }
+    }
 }

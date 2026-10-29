@@ -22,7 +22,11 @@
             <span class="fw-bold">Quản lý sinh viên</span>
         </div>
         <div class="d-flex align-items-center gap-3">
-            <!-- Hoan: cho nay dat "Xin chao, <ten user>" + nut Dang xuat -->
+            <span class="topbar-user">Xin chào, <strong><?= htmlspecialchars($_SESSION['user']['name'], ENT_QUOTES, 'UTF-8') ?></strong></span>
+            <form method="post" action="<?= DOMAIN ?>?controller=user&action=logout" class="m-0">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                <button type="submit" class="btn btn-topbar">Đăng xuất</button>
+            </form>
         </div>
     </div>
 </header>
@@ -32,6 +36,9 @@
     </div>
 </section>
 <main class="container pb-5">
+    <?php if ($flash !== ''): ?>
+        <div class="alert alert-success" role="status"><?= htmlspecialchars($flash, ENT_QUOTES, 'UTF-8') ?></div>
+    <?php endif; ?>
 
     <div class="card list-card">
         <div class="card-body">
@@ -47,7 +54,7 @@
                             <i class="bi bi-search"></i>
                             <input type="search" name="q" class="form-control"
                                    placeholder="Tìm mã, tên, lớp, ngành…"
-                                   value="<?= $q ?>">
+                                   value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
                         </div>
                         <button type="submit" class="btn btn-icon btn-search" title="Tìm">
                             <i class="bi bi-search"></i>
@@ -106,8 +113,12 @@
                                            class="btn btn-icon btn-view" title="Xem chi tiết"><i class="bi bi-eye"></i></a>
                                         <a href="?controller=student&action=edit&id=<?= $student->ma_sv ?><?= $qParam ?>"
                                            class="btn btn-icon btn-edit" title="Sửa"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="?controller=student&action=delete&id=<?= $student->ma_sv ?><?= $qParam ?>"
-                                           class="btn btn-icon btn-del" title="Xóa"><i class="bi bi-trash3"></i></a>
+                                        <button type="button" class="btn btn-icon btn-del delete-student-button"
+                                                title="Xóa"
+                                                data-student-id="<?= htmlspecialchars($student->ma_sv, ENT_QUOTES, 'UTF-8') ?>"
+                                                data-student-name="<?= htmlspecialchars($student->ho_ten, ENT_QUOTES, 'UTF-8') ?>">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -122,7 +133,83 @@
         </div>
     </div>
 
+    <div class="popup popup-confirm-overlay" id="delete-confirmation" role="dialog"
+         aria-modal="true" aria-labelledby="delete-confirmation-title" hidden>
+        <section class="popup-card popup-card--auto popup-narrow">
+            <div class="popup-head">
+                <div>
+                    <h2 class="h5 mb-1" id="delete-confirmation-title">Xác nhận xóa sinh viên</h2>
+                    <div class="text-muted small">Thao tác này không thể hoàn tác.</div>
+                </div>
+                <button type="button" class="popup-close" data-close-delete-dialog aria-label="Đóng">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="popup-body">
+                <div class="danger-icon"><i class="bi bi-trash3"></i></div>
+                <p class="popup-confirm-title">Bạn có chắc muốn xóa hồ sơ này?</p>
+                <p class="text-muted mb-0">
+                    Sinh viên <strong id="delete-student-name"></strong>
+                    (<span id="delete-student-id"></span>) và thông tin chi tiết sẽ bị xóa.
+                </p>
+            </div>
+            <form method="post" action="<?= DOMAIN ?>?controller=student&action=delete" class="popup-foot" id="delete-student-form">
+                <!-- Gửi token phiên cùng yêu cầu xóa để controller xác nhận form hợp lệ. -->
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                <input type="hidden" name="id" id="delete-student-id-input">
+                <input type="hidden" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
+                <button type="button" class="btn btn-light" data-close-delete-dialog>Hủy</button>
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash3 me-1"></i>Xóa sinh viên
+                </button>
+            </form>
+        </section>
+    </div>
+
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const deleteDialog = document.getElementById('delete-confirmation');
+    const deleteStudentName = document.getElementById('delete-student-name');
+    const deleteStudentId = document.getElementById('delete-student-id');
+    const deleteStudentIdInput = document.getElementById('delete-student-id-input');
+    let deleteTrigger = null;
+
+    function closeDeleteDialog() {
+        deleteDialog.hidden = true;
+        document.body.style.overflow = '';
+        if (deleteTrigger) {
+            deleteTrigger.focus();
+        }
+    }
+
+    document.querySelectorAll('.delete-student-button').forEach((button) => {
+        button.addEventListener('click', () => {
+            deleteTrigger = button;
+            deleteStudentName.textContent = button.dataset.studentName;
+            deleteStudentId.textContent = button.dataset.studentId;
+            deleteStudentIdInput.value = button.dataset.studentId;
+            deleteDialog.hidden = false;
+            document.body.style.overflow = 'hidden';
+            deleteDialog.querySelector('[data-close-delete-dialog]').focus();
+        });
+    });
+
+    deleteDialog.querySelectorAll('[data-close-delete-dialog]').forEach((button) => {
+        button.addEventListener('click', closeDeleteDialog);
+    });
+
+    deleteDialog.addEventListener('click', (event) => {
+        if (event.target === deleteDialog) {
+            closeDeleteDialog();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !deleteDialog.hidden) {
+            closeDeleteDialog();
+        }
+    });
+</script>
 </body>
 </html>
