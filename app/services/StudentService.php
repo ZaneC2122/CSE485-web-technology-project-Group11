@@ -87,4 +87,68 @@ class StudentService
             throw $exception;
         }
     }
+
+    public function updateStudent($id, $data)
+    {
+        $dbConnection = new DBConnection();
+        $conn = $dbConnection->getConnection();
+
+        $conn->beginTransaction();
+        try {
+            $updateStudent = $conn->prepare(
+                "UPDATE student
+                 SET ho_ten = ?, ngay_sinh = ?, gioi_tinh = ?, ten_lop = ?,
+                     nganh = ?, khoa = ?, trang_thai = ?
+                 WHERE ma_sv = ?"
+            );
+            $updateStudent->execute([
+                $data['ho_ten'], $data['ngay_sinh'], $data['gioi_tinh'],
+                $data['ten_lop'], $data['nganh'], $data['khoa'],
+                $data['trang_thai'], $id
+            ]);
+
+            if ($updateStudent->rowCount() === 0) {
+                $exists = $conn->prepare("SELECT COUNT(*) FROM student WHERE ma_sv = ?");
+                $exists->execute([$id]);
+                if ($exists->fetchColumn() == 0) {
+                    $conn->rollBack();
+                    return false;
+                }
+            }
+
+            $upsertDetails = $conn->prepare(
+                "INSERT INTO students
+                    (ma_sv, cccd, ngay_cap_cccd, noi_cap_cccd, dan_toc, quoc_tich,
+                     dia_chi_thuong_tru, noi_o_hien_tai, ngay_nhap_hoc,
+                     nguoi_lien_he, sdt_nguoi_lien_he, ghi_chu)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 ON DUPLICATE KEY UPDATE
+                    cccd = VALUES(cccd),
+                    ngay_cap_cccd = VALUES(ngay_cap_cccd),
+                    noi_cap_cccd = VALUES(noi_cap_cccd),
+                    dan_toc = VALUES(dan_toc),
+                    quoc_tich = VALUES(quoc_tich),
+                    dia_chi_thuong_tru = VALUES(dia_chi_thuong_tru),
+                    noi_o_hien_tai = VALUES(noi_o_hien_tai),
+                    ngay_nhap_hoc = VALUES(ngay_nhap_hoc),
+                    nguoi_lien_he = VALUES(nguoi_lien_he),
+                    sdt_nguoi_lien_he = VALUES(sdt_nguoi_lien_he),
+                    ghi_chu = VALUES(ghi_chu)"
+            );
+            $upsertDetails->execute([
+                $id, $data['cccd'], $data['ngay_cap_cccd'], $data['noi_cap_cccd'],
+                $data['dan_toc'], $data['quoc_tich'], $data['dia_chi_thuong_tru'],
+                $data['noi_o_hien_tai'], $data['ngay_nhap_hoc'], $data['nguoi_lien_he'],
+                $data['sdt_nguoi_lien_he'], $data['ghi_chu']
+            ]);
+
+            $conn->commit();
+            return true;
+        } catch (Throwable $exception) {
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
+            throw $exception;
+        }
+    }
 }

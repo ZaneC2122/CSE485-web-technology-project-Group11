@@ -31,6 +31,10 @@ if ($controller === 'home') {
         $studentController->index();
     } elseif ($action === 'detail' && $id !== null) {
         $studentController->detail($id);
+    } elseif ($action === 'edit' && $id !== null) {
+        $studentController->edit($id);
+    } elseif ($action === 'update' && $id !== null) {
+        $studentController->update($id);
     } elseif ($action === 'delete') {
         $studentController->delete();
     } else {
