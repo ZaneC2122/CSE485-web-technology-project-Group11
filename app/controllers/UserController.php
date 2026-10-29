@@ -14,45 +14,99 @@ class UserController
         // Khởi tạo biến để lưu trữ dữ liệu và lỗi
         $email = '';
         $error = '';
-        $csrfToken = $this->getCsrfToken();
+        $success = $_SESSION['registration_success'] ?? '';
+        unset($_SESSION['registration_success']);
 
         // Xử lý khi người dùng gửi form đăng nhập
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $submittedEmail = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
-            $submittedToken = $_POST['csrf_token'] ?? '';
             $email = is_string($submittedEmail) ? trim($submittedEmail) : '';
 
-            // Token xác nhận form đăng nhập được gửi từ phiên hiện tại.
-            if (!is_string($submittedToken) || !hash_equals($csrfToken, $submittedToken)) {
-                $error = 'Phiên đăng nhập không hợp lệ. Vui lòng tải lại trang và thử lại.';
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || !is_string($password) || $password === '') {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !is_string($password) || $password === '') {
                 $error = 'Vui lòng nhập email hợp lệ và mật khẩu.';
             } else {
                 $userService = new UserService();
                 $user = $userService->loginUser($email, $password);
 
-                // Nếu đăng nhập thành công, lưu thông tin người dùng vào session và chuyển hướng
                 if ($user) {
-                    // Tạo session mới để ngăn chặn session fixation
                     session_regenerate_id(true);
                     $_SESSION['user'] = [
                         'id' => $user['id_user'],
                         'name' => $user['ho_ten'],
                         'email' => $user['email'],
                     ];
-                    // Làm mới token sau khi đăng nhập để dùng cho các form cần xác nhận.
+
                     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
                     header('Location: ' . DOMAIN . '?controller=student&action=index', true, 303);
                     exit;
                 }
-                // Nếu đăng nhập thất bại, hiển thị thông báo lỗi
+
                 $error = 'Email hoặc mật khẩu không chính xác.';
             }
         }
 
+
         include APP_ROOT . '/app/views/user/login.php';
+    }
+
+    public function register()
+    {
+        if (!empty($_SESSION['user'])) {
+            header('Location: ' . DOMAIN . '?controller=student&action=index');
+            exit;
+        }
+
+        $name = '';
+        $email = '';
+        $error = '';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $submittedName = $_POST['ho_ten'] ?? '';
+            $submittedEmail = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $confirmPassword = $_POST['confirm_password'] ?? '';
+            $name = is_string($submittedName) ? trim($submittedName) : '';
+            $email = is_string($submittedEmail) ? trim($submittedEmail) : '';
+
+            if (
+                $name === ''
+                || !preg_match('/^.{1,100}$/us', $name)
+                || !filter_var($email, FILTER_VALIDATE_EMAIL)
+                || strlen($email) > 100
+                || !is_string($password)
+                || !preg_match('/^.{8,}$/us', $password)
+                || strlen($password) > 72
+                || !is_string($confirmPassword)
+                || $password !== $confirmPassword
+            ) {
+                $error = 'Vui lòng kiểm tra họ tên, email và mật khẩu (mật khẩu từ 8 ký tự, tối đa 72 byte, xác nhận phải trùng khớp).';
+            } else {
+                $userService = new UserService();
+
+                try {
+                    $user = $userService->registerUser($name, $email, $password);
+                } catch (PDOException $exception) {
+                    if ($exception->getCode() !== '23000') {
+                        throw $exception;
+                    }
+
+                    $user = false;
+                }
+
+                if ($user) {
+                    $_SESSION['registration_success'] = 'Đăng ký thành công. Vui lòng đăng nhập bằng tài khoản vừa tạo.';
+                    header('Location: ' . DOMAIN . '?controller=user&action=login', true, 303);
+                    exit;
+                }
+
+                $error = 'Email này đã được sử dụng. Vui lòng đăng nhập hoặc dùng email khác.';
+            }
+        }
+
+        include APP_ROOT . '/app/views/user/register.php';
     }
 
     public function logout()

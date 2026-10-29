@@ -11,7 +11,7 @@ $routes = [
     ],
     'user' => [
         'controller' => 'UserController',
-        'actions' => ['login', 'logout'],
+        'actions' => ['login', 'register', 'logout'],
     ],
     'student' => [
         'controller' => 'StudentController',
