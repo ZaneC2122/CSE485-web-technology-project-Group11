@@ -138,14 +138,14 @@
             <div class="popup-head">
                 <div>
                     <h2 class="h5 mb-1" id="delete-confirmation-title">Xác nhận xóa sinh viên</h2>
-                    <div class="text-muted small">Thao tác này không thể hoàn tác.</div>
+                    <!-- <div class="text-muted small">Thao tác này không thể hoàn tác.</div> -->
                 </div>
                 <button type="button" class="popup-close" data-close-delete-dialog aria-label="Đóng">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
             <div class="popup-body">
-                <div class="danger-icon"><i class="bi bi-trash3"></i></div>
+                <!-- <div class="danger-icon"><i class="bi bi-trash3"></i></div> -->
                 <p class="popup-confirm-title">Bạn có chắc muốn xóa hồ sơ này?</p>
                 <p class="text-muted mb-0">
                     Sinh viên <strong id="delete-student-name"></strong>

@@ -16,8 +16,7 @@
     <div class="auth-brand">
         <div class="auth-brand-icon"><i class="bi bi-mortarboard"></i></div>
         <div>
-            <div class="fw-bold">Campus</div>
-            <div class="text-muted small">Quản lý sinh viên</div>
+            <div class="fw-bold">Quản lý sinh viên</div>
         </div>
     </div>
 
@@ -51,9 +50,7 @@
     </form>
 
     <p class="auth-foot">Chưa có tài khoản? <a class="auth-link text-decoration-none" href="<?= DOMAIN ?>?controller=user&action=register">Đăng ký</a></p>
-    <div class="auth-note">
-        Dùng email và mật khẩu đã được cấp để đăng nhập vào hệ thống quản lý sinh viên.
-    </div>
+    
 </main>
 </body>
 </html>

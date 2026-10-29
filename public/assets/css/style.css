@@ -37,17 +37,17 @@ body.auth-page {
     margin-bottom: 1.75rem;
 }
 
-.auth-brand-icon {
+/* .auth-brand-icon {
     width: 44px;
     height: 44px;
     border-radius: 12px;
-    background: #9a5b43;
+    background-color: #6366f1;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.3rem;
-}
+} */
 
 .auth-kicker {
     color: var(--indigo);
@@ -122,20 +122,22 @@ body.dash-page {
     box-shadow: 0 2px 12px rgba(30, 35, 90, 0.06);
 }
 
-.brand-icon {
+.brand-icon, 
+.auth-brand-icon {
     width: 38px;
     height: 38px;
     border-radius: 10px;
-    background-color: #6366f1;
-    color: #fff;
+    background-color: #6366f1 !important;
+    color: #fff !important;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
     transition: background-color 0.3s ease;
 }
-.brand-icon a {
-    color: #F9FAFB;
+.brand-icon a,
+.auth-brand-icon i {
+    color: #F9FAFB !important;
 }
 
 .brand-icon:hover {
@@ -149,6 +151,29 @@ body.dash-page {
 
 .topbar-user strong {
     color: #111827;
+}
+
+/* Nút Đăng xuất */
+.topbar .btn-topbar,
+.topbar button.btn-topbar {
+    background: #dc3545 !important;
+    background-color: #dc3545 !important;
+    color: #fff !important;
+    border: 1px solid #dc3545 !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.topbar .btn-topbar:hover,
+.topbar button.btn-topbar:hover {
+    background: #bb2d3b !important;
+    background-color: #bb2d3b !important;
+    color: #fff !important;
+    border-color: #bb2d3b !important;
 }
 
 .hero {

@@ -16,8 +16,7 @@
     <div class="auth-brand">
         <div class="auth-brand-icon"><i class="bi bi-mortarboard"></i></div>
         <div>
-            <div class="fw-bold">Campus</div>
-            <div class="text-muted small">Quản lý sinh viên</div>
+            <div class="fw-bold">Quản lý sinh viên</div>
         </div>
     </div>
 
