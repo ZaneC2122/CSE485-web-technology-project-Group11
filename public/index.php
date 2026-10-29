@@ -29,6 +29,10 @@ if ($controller === 'home') {
 
     if ($action === 'index') {
         $studentController->index();
+    } elseif ($action === 'add') {
+        $studentController->add();
+    } elseif ($action === 'create') {
+        $studentController->create();
     } elseif ($action === 'detail' && $id !== null) {
         $studentController->detail($id);
     } elseif ($action === 'edit' && $id !== null) {

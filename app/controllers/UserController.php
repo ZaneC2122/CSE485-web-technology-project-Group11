@@ -117,14 +117,6 @@ class UserController
             exit('Phương thức không được hỗ trợ.');
         }
 
-        $submittedToken = $_POST['csrf_token'] ?? '';
-        $csrfToken = $this->getCsrfToken();
-        // Chỉ đăng xuất khi form gửi token hợp lệ của phiên hiện tại.
-        if (!is_string($submittedToken) || !hash_equals($csrfToken, $submittedToken)) {
-            http_response_code(400);
-            exit('Phiên làm việc không hợp lệ. Vui lòng tải lại trang và thử lại.');
-        }
-
         $_SESSION = [];
         if (ini_get('session.use_cookies')) {
             $cookie = session_get_cookie_params();

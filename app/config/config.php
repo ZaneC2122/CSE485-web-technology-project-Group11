@@ -2,7 +2,7 @@
 define('APP_ROOT', dirname(__FILE__, 3));
 define('DOMAIN', 'http://localhost/BTL-QLSV/public/');
 // Tang so nay moi lan sua style.css de trinh duyet tai lai file (chong cache)
-define('CSS_VERSION', '6');
+define('CSS_VERSION', '7');
 
 // May nao co tai khoan MySQL khac (user/pass khac root rong) thi tao file
 // config.local.php cung thu muc, chi can define lai 4 hang DB_* o trong do.

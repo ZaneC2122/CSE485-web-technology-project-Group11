@@ -23,10 +23,9 @@
         </div>
         <div class="d-flex align-items-center gap-3">
             <span class="topbar-user">Xin chào, <strong><?= htmlspecialchars($_SESSION['user']['name'], ENT_QUOTES, 'UTF-8') ?></strong></span>
-            <form method="post" action="<?= DOMAIN ?>?controller=user&action=logout" class="m-0">
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                <button type="submit" class="btn btn-topbar">Đăng xuất</button>
-            </form>
+        <form method="post" action="<?= DOMAIN ?>?controller=user&action=logout" class="m-0">
+            <button type="submit" class="btn btn-topbar">Đăng xuất</button>
+        </form>
         </div>
     </div>
 </header>
@@ -60,7 +59,7 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
-                    <a href="?controller=student&action=add<?= $qParam ?>" class="btn btn-icon btn-indigo" title="Thêm sinh viên">
+                    <a href="?controller=student&action=add<?= $qParam ?>" class="btn btn-icon btn-indigo" title="Thêm sinh viên" aria-label="Thêm sinh viên">
                         <i class="bi bi-plus-lg"></i>
                     </a>
                 </div>
@@ -154,8 +153,6 @@
                 </p>
             </div>
             <form method="post" action="<?= DOMAIN ?>?controller=student&action=delete" class="popup-foot" id="delete-student-form">
-                <!-- Gửi token phiên cùng yêu cầu xóa để controller xác nhận form hợp lệ. -->
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                 <input type="hidden" name="id" id="delete-student-id-input">
                 <input type="hidden" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
                 <button type="button" class="btn btn-light" data-close-delete-dialog>Hủy</button>

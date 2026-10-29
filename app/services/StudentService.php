@@ -3,6 +3,27 @@ require_once APP_ROOT . '/app/models/Student.php';
 
 class StudentService
 {
+    public function createStudent($data)
+    {
+        $dbConnection = new DBConnection();
+        $conn = $dbConnection->getConnection();
+        $stmt = $conn->prepare(
+            "INSERT INTO student (ma_sv, ho_ten, ngay_sinh, gioi_tinh, ten_lop, nganh, khoa, trang_thai)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+
+        return $stmt->execute([
+            $data['ma_sv'],
+            $data['ho_ten'],
+            $data['ngay_sinh'],
+            $data['gioi_tinh'],
+            $data['ten_lop'],
+            $data['nganh'],
+            $data['khoa'],
+            $data['trang_thai'],
+        ]);
+    }
+
     // Lay danh sach sinh vien. $q = tu khoa tim kiem, de trong thi lay het.
     public function getAll($q)
     {
