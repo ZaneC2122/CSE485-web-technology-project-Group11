@@ -198,9 +198,13 @@ class StudentController
         $student = $studentService->getStudentById($id);
 
         if (!$student) {
-            echo "Không tìm thấy sinh viên.";
-            return;
+            http_response_code(404);
+            exit('Không tìm thấy sinh viên.');
         }
+
+        $q = isset($_GET['q']) && is_string($_GET['q'])
+            ? trim($_GET['q'])
+            : '';
 
         include APP_ROOT . '/app/views/student/detail.php';
     }
