@@ -1,54 +1,51 @@
 <?php
 require_once __DIR__ . '/../app/config/config.php';
 require_once APP_ROOT . '/app/libs/DbConnection.php';
+require_once APP_ROOT . '/app/controllers/HomeController.php';
+require_once APP_ROOT . '/app/controllers/StudentController.php';
+require_once APP_ROOT . '/app/controllers/UserController.php';
 
 session_start();
 
-$routes = [
-    'home' => [
-        'controller' => 'HomeController',
-        'actions' => ['index'],
-    ],
-    'user' => [
-        'controller' => 'UserController',
-        'actions' => ['login', 'register', 'logout'],
-    ],
-    'student' => [
-        'controller' => 'StudentController',
-        'actions' => ['index', 'detail', 'delete'],
-    ],
-];
+$controller = isset($_GET['controller']) && is_string($_GET['controller'])? $_GET['controller']:'home';
+$action = isset($_GET['action']) && is_string($_GET['action'])? $_GET['action']: 'index';
+$id = isset($_GET['id']) && is_string($_GET['id']) ? $_GET['id'] : null;
 
-$controller = $_GET['controller'] ?? 'home';
-$action = $_GET['action'] ?? 'index';
-$id = $_GET['id'] ?? null;
+$homeController = new HomeController();
+$studentController = new StudentController();
+$userController = new UserController();
 
-if (!is_string($controller) || !isset($routes[$controller])) {
-    http_response_code(404);
-    exit('404: controller không tồn tại');
-}
+if ($controller === 'home') {
+    if ($action === 'index') {
+        $homeController->index();
+    } else {
+        echo 'Action chưa được cài đặt: ' . $action;
+    }
+} elseif ($controller === 'student') {
+    if (empty($_SESSION['user'])) {
+        header('Location: ' . DOMAIN . '?controller=user&action=login');
+        exit;
+    }
 
-if (!is_string($action) || !in_array($action, $routes[$controller]['actions'], true)) {
-    http_response_code(404);
-    exit('404: action chưa được cài đặt');
-}
-
-if ($action === 'detail' && !is_string($id)) {
-    http_response_code(404);
-    exit('404: không tìm thấy sinh viên');
-}
-
-if ($controller === 'student' && empty($_SESSION['user'])) {
-    header('Location: ' . DOMAIN . '?controller=user&action=login');
-    exit;
-}
-
-require_once APP_ROOT . '/app/controllers/' . $routes[$controller]['controller'] . '.php';
-$controllerClass = $routes[$controller]['controller'];
-$controllerObject = new $controllerClass();
-
-if ($action === 'detail') {
-    $controllerObject->$action($id);
+    if ($action === 'index') {
+        $studentController->index();
+    } elseif ($action === 'detail' && $id !== null) {
+        $studentController->detail($id);
+    } elseif ($action === 'delete') {
+        $studentController->delete();
+    } else {
+        echo 'Action chưa được cài đặt: ' . $action;
+    }
+} elseif ($controller === 'user') {
+    if ($action === 'login') {
+        $userController->login();
+    } elseif ($action === 'register') {
+        $userController->register();
+    } elseif ($action === 'logout') {
+        $userController->logout();
+    } else {
+        echo 'Action chưa được cài đặt: ' . $action;
+    }
 } else {
-    $controllerObject->$action();
+    echo 'Controller chưa được cài đặt: ' . $controller;
 }
