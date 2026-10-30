@@ -7,21 +7,37 @@ class StudentService
     {
         $dbConnection = new DBConnection();
         $conn = $dbConnection->getConnection();
-        $stmt = $conn->prepare(
-            "INSERT INTO student (ma_sv, ho_ten, ngay_sinh, gioi_tinh, ten_lop, nganh, khoa, trang_thai)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-        );
+        $conn->beginTransaction();
 
-        return $stmt->execute([
-            $data['ma_sv'],
-            $data['ho_ten'],
-            $data['ngay_sinh'],
-            $data['gioi_tinh'],
-            $data['ten_lop'],
-            $data['nganh'],
-            $data['khoa'],
-            $data['trang_thai'],
-        ]);
+        try {
+            $stmt = $conn->prepare(
+                "INSERT INTO student (ma_sv, ho_ten, ngay_sinh, gioi_tinh, ten_lop, nganh, khoa, trang_thai)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            $stmt->execute([
+                $data['ma_sv'],
+                $data['ho_ten'],
+                $data['ngay_sinh'],
+                $data['gioi_tinh'],
+                $data['ten_lop'],
+                $data['nganh'],
+                $data['khoa'],
+                $data['trang_thai'],
+            ]);
+
+            $detailsStmt = $conn->prepare(
+                "INSERT INTO students (ma_sv) VALUES (?)"
+            );
+            $detailsStmt->execute([$data['ma_sv']]);
+
+            $conn->commit();
+            return true;
+        } catch (Throwable $exception) {
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
+            throw $exception;
+        }
     }
 
     // Lay danh sach sinh vien. $q = tu khoa tim kiem, de trong thi lay het.
@@ -70,7 +86,10 @@ class StudentService
         $dbConnection = new DBConnection();
         $conn = $dbConnection->getConnection();
 
-        $sql = "SELECT *
+        $sql = "SELECT s.ma_sv, s.ho_ten, s.ngay_sinh, s.gioi_tinh, s.ten_lop, s.nganh, s.khoa, s.trang_thai,
+                       sd.cccd, sd.ngay_cap_cccd, sd.noi_cap_cccd, sd.dan_toc, sd.quoc_tich,
+                       sd.dia_chi_thuong_tru, sd.noi_o_hien_tai, sd.ngay_nhap_hoc,
+                       sd.nguoi_lien_he, sd.sdt_nguoi_lien_he, sd.ghi_chu
                 FROM student s
                 LEFT JOIN students sd ON s.ma_sv = sd.ma_sv
                 WHERE s.ma_sv = ?";
