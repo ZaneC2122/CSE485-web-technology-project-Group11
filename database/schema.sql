@@ -40,9 +40,9 @@ ghi_chu VARCHAR(200),
 -- Du lieu mau
 INSERT INTO users(ho_ten, email, mat_khau)
 VALUES
-('Nguyễn Văn A', 'a@gmail.com', '12345678'),
-('Trần Văn B', 'b@gmail.com', '12345678'),
-('Lê Văn C', 'c@gmail.com', '12345678');
+('Nguyễn Văn An', 'an@gmail.com', '12345678'),
+('Trần Văn Bình', 'binh@gmail.com', '12345678'),
+('Lê Văn Cường', 'cuong@gmail.com', '12345678');
 
 INSERT INTO student(ma_sv, ho_ten, ngay_sinh, gioi_tinh, ten_lop, nganh, khoa, trang_thai)
 VALUES

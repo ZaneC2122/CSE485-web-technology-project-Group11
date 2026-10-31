@@ -92,7 +92,7 @@
                 </div>
 
                 <hr class="my-4">
-                <h6 class="fw-bold mb-3">Thông tin bổ sung</h6>
+                <h6 class="fw-bold mb-3">Thông tin cá nhân</h6>
                 <div class="detail-grid">
                     <div>
                         <label for="cccd" class="form-label">Căn cước công dân</label>
