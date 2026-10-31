@@ -24,11 +24,20 @@ class StudentService
                 $data['khoa'],
                 $data['trang_thai'],
             ]);
-
             $detailsStmt = $conn->prepare(
-                "INSERT INTO students (ma_sv) VALUES (?)"
+                "INSERT INTO students
+                    (ma_sv, cccd, ngay_cap_cccd, noi_cap_cccd, dan_toc, quoc_tich,
+                     dia_chi_thuong_tru, noi_o_hien_tai, ngay_nhap_hoc,
+                     nguoi_lien_he, sdt_nguoi_lien_he, ghi_chu)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
-            $detailsStmt->execute([$data['ma_sv']]);
+            $detailsStmt->execute([
+                $data['ma_sv'], $data['cccd'], $data['ngay_cap_cccd'],
+                $data['noi_cap_cccd'], $data['dan_toc'], $data['quoc_tich'],
+                $data['dia_chi_thuong_tru'], $data['noi_o_hien_tai'],
+                $data['ngay_nhap_hoc'], $data['nguoi_lien_he'],
+                $data['sdt_nguoi_lien_he'], $data['ghi_chu'],
+            ]);
 
             $conn->commit();
             return true;

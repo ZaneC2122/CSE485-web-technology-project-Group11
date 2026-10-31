@@ -92,6 +92,74 @@
                         </select>
                     </div>
                 </div>
+
+                <hr class="my-4">
+                <h6 class="fw-bold mb-3">Thông tin bổ sung</h6>
+                <div class="detail-grid">
+                    <div>
+                        <label for="cccd" class="form-label">Căn cước công dân</label>
+                        <input type="text" name="cccd" id="cccd" class="form-control"
+                               value="<?= htmlspecialchars($data['cccd'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="12">
+                    </div>
+                    <div>
+                        <label for="ngay_cap_cccd" class="form-label">Ngày cấp CCCD</label>
+                        <input type="date" name="ngay_cap_cccd" id="ngay_cap_cccd" class="form-control"
+                               value="<?= htmlspecialchars($data['ngay_cap_cccd'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                    </div>
+                    <div>
+                        <label for="noi_cap_cccd" class="form-label">Nơi cấp CCCD</label>
+                        <input type="text" name="noi_cap_cccd" id="noi_cap_cccd" class="form-control"
+                               value="<?= htmlspecialchars($data['noi_cap_cccd'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="100">
+                    </div>
+                    <div>
+                        <label for="dan_toc" class="form-label">Dân tộc</label>
+                        <input type="text" name="dan_toc" id="dan_toc" class="form-control"
+                               value="<?= htmlspecialchars($data['dan_toc'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="50">
+                    </div>
+                    <div>
+                        <label for="quoc_tich" class="form-label">Quốc tịch</label>
+                        <input type="text" name="quoc_tich" id="quoc_tich" class="form-control"
+                               value="<?= htmlspecialchars($data['quoc_tich'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="50">
+                    </div>
+                    <div>
+                        <label for="dia_chi_thuong_tru" class="form-label">Địa chỉ thường trú</label>
+                        <input type="text" name="dia_chi_thuong_tru" id="dia_chi_thuong_tru" class="form-control"
+                               value="<?= htmlspecialchars($data['dia_chi_thuong_tru'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="200">
+                    </div>
+                    <div>
+                        <label for="noi_o_hien_tai" class="form-label">Nơi ở hiện tại</label>
+                        <input type="text" name="noi_o_hien_tai" id="noi_o_hien_tai" class="form-control"
+                               value="<?= htmlspecialchars($data['noi_o_hien_tai'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="200">
+                    </div>
+                    <div>
+                        <label for="ngay_nhap_hoc" class="form-label">Ngày nhập học</label>
+                        <input type="date" name="ngay_nhap_hoc" id="ngay_nhap_hoc" class="form-control"
+                               value="<?= htmlspecialchars($data['ngay_nhap_hoc'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                    </div>
+                    <div>
+                        <label for="nguoi_lien_he" class="form-label">Người liên hệ</label>
+                        <input type="text" name="nguoi_lien_he" id="nguoi_lien_he" class="form-control"
+                               value="<?= htmlspecialchars($data['nguoi_lien_he'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="100">
+                    </div>
+                    <div>
+                        <label for="sdt_nguoi_lien_he" class="form-label">Số điện thoại người liên hệ</label>
+                        <input type="tel" name="sdt_nguoi_lien_he" id="sdt_nguoi_lien_he" class="form-control"
+                               value="<?= htmlspecialchars($data['sdt_nguoi_lien_he'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               maxlength="15">
+                    </div>
+                    <div style="grid-column: 1 / -1;">
+                        <label for="ghi_chu" class="form-label">Ghi chú</label>
+                        <textarea name="ghi_chu" id="ghi_chu" class="form-control" rows="3"
+                                  maxlength="200"><?= htmlspecialchars($data['ghi_chu'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                    </div>
+                </div>
             </div>
 
             <div class="popup-foot">

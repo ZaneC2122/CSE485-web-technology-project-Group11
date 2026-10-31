@@ -45,11 +45,21 @@ class StudentController
             'ma_sv', 'ho_ten', 'ngay_sinh', 'gioi_tinh',
             'ten_lop', 'nganh', 'khoa', 'trang_thai'
         ];
+        $additionalFields = [
+            'cccd', 'ngay_cap_cccd', 'noi_cap_cccd', 'dan_toc', 'quoc_tich',
+            'dia_chi_thuong_tru', 'noi_o_hien_tai', 'ngay_nhap_hoc',
+            'nguoi_lien_he', 'sdt_nguoi_lien_he', 'ghi_chu'
+        ];
 
         $data = [];
         foreach ($fields as $field) {
             $value = $_POST[$field] ?? '';
             $data[$field] = is_string($value) ? trim($value) : '';
+        }
+        foreach ($additionalFields as $field) {
+            $value = $_POST[$field] ?? '';
+            $value = is_string($value) ? trim($value) : '';
+            $data[$field] = $value !== '' ? $value : null;
         }
 
         $query = isset($_POST['q']) && is_string($_POST['q'])
@@ -79,6 +89,46 @@ class StudentController
 
         if ($error === '' && !in_array($data['gioi_tinh'], ['Nam', 'Nữ'], true)) {
             $error = 'Vui lòng chọn giới tính hợp lệ.';
+        }
+
+        $maximumLengths = [
+            'cccd' => 12,
+            'noi_cap_cccd' => 100,
+            'dan_toc' => 50,
+            'quoc_tich' => 50,
+            'dia_chi_thuong_tru' => 200,
+            'noi_o_hien_tai' => 200,
+            'nguoi_lien_he' => 100,
+            'sdt_nguoi_lien_he' => 15,
+            'ghi_chu' => 200,
+        ];
+        foreach ($maximumLengths as $field => $maximumLength) {
+            if (
+                $error === ''
+                && $data[$field] !== null
+                && !preg_match('/^.{0,' . $maximumLength . '}$/us', $data[$field])
+            ) {
+                $error = 'Thông tin bổ sung vượt quá độ dài cho phép.';
+            }
+        }
+
+        foreach (['ngay_cap_cccd', 'ngay_nhap_hoc'] as $dateField) {
+            if ($error !== '' || $data[$dateField] === null) {
+                continue;
+            }
+
+            $date = DateTime::createFromFormat('!Y-m-d', $data[$dateField]);
+            $dateErrors = DateTime::getLastErrors();
+            if (
+                !$date
+                || (
+                    $dateErrors !== false
+                    && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0)
+                )
+                || $date->format('Y-m-d') !== $data[$dateField]
+            ) {
+                $error = 'Vui lòng nhập ngày cấp CCCD và ngày nhập học hợp lệ.';
+            }
         }
 
         if (
