@@ -8,14 +8,14 @@ CREATE TABLE users (
 
 -- Bang 2: Thong tin sinh vien tong quan
 CREATE TABLE student (
-ma_sv VARCHAR(10) PRIMARY KEY,
-ho_ten VARCHAR(100),
-ngay_sinh DATE,
-gioi_tinh VARCHAR(10),
-ten_lop VARCHAR(50),
-nganh VARCHAR(100),
-khoa VARCHAR(100),
-trang_thai VARCHAR(30)
+    ma_sv VARCHAR(10) PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    ngay_sinh DATE NOT NULL,
+    gioi_tinh VARCHAR(10) NOT NULL,
+    ten_lop VARCHAR(50) NOT NULL,
+    nganh VARCHAR(100) NOT NULL,
+    khoa VARCHAR(100) NOT NULL,
+    trang_thai VARCHAR(30) NOT NULL
 );
 
 -- Bang 3: Thong tin chi tiet sinh vien

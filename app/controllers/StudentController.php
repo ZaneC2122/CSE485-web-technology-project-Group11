@@ -14,7 +14,6 @@ class StudentController
         $studentService = new StudentService();
         $students = $studentService->getAll($q);
         $total = $studentService->countAll();
-        $csrfToken = $this->getCsrfToken();
         $flash = $_SESSION['flash'] ?? '';
         unset($_SESSION['flash']);
 
@@ -196,7 +195,6 @@ class StudentController
 
     private function renderAddForm($q, $error = '', $data = [])
     {
-        $csrfToken = $this->getCsrfToken();
         include APP_ROOT . '/app/views/student/add.php';
     }
 
@@ -233,15 +231,6 @@ class StudentController
         exit;
     }
 
-    private function getCsrfToken()
-    {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        return $_SESSION['csrf_token'];
-    }
-
     public function detail($id)
     {
         $studentService = new StudentService();
@@ -268,7 +257,6 @@ class StudentController
             exit('Không tìm thấy sinh viên.');
         }
 
-        $csrfToken = $this->getCsrfToken();
         $q = isset($_GET['q']) && is_string($_GET['q'])
             ? trim($_GET['q'])
             : '';

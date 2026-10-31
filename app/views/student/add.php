@@ -11,13 +11,11 @@
 <body class="dash-page">
     <div class="popup">
         <form class="popup-card popup-form" action="<?= DOMAIN ?>?controller=student&action=create" method="post">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
 
             <div class="popup-head">
                 <div>
                     <h4 class="mb-1 fw-bold">Thêm sinh viên</h4>
-                    <small class="text-muted">Điền đầy đủ thông tin để tạo hồ sơ</small>
                 </div>
                 <a href="?controller=student&action=index<?= $q !== '' ? '&q=' . urlencode($q) : '' ?>"
                    class="popup-close" title="Đóng" aria-label="Đóng">
