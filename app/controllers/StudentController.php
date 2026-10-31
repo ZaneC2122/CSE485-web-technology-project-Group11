@@ -219,13 +219,7 @@ class StudentController
         }
 
         $_SESSION['flash'] = 'Đã xóa hồ sơ sinh viên ' . $id . '.';
-
-        $submittedQuery = $_POST['q'] ?? '';
         $redirect = DOMAIN . '?controller=student&action=index';
-
-        if (is_string($submittedQuery) && $submittedQuery !== '') {
-            $redirect .= '&q=' . rawurlencode($submittedQuery);
-        }
 
         header('Location: ' . $redirect, true, 303);
         exit;

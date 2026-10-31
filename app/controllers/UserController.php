@@ -37,9 +37,6 @@ class UserController
                         'name' => $user['ho_ten'],
                         'email' => $user['email'],
                     ];
-
-                    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-
                     header('Location: ' . DOMAIN . '?controller=student&action=index', true, 303);
                     exit;
                 }
@@ -134,15 +131,5 @@ class UserController
 
         header('Location: ' . DOMAIN . '?controller=user&action=login', true, 303);
         exit;
-    }
-
-    private function getCsrfToken()
-    {
-        // Tạo token ngẫu nhiên nếu phiên chưa có, hoặc dùng lại token đang có.
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        return $_SESSION['csrf_token'];
     }
 }
