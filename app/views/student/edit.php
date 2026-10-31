@@ -17,7 +17,6 @@
             <div class="popup-head">
                 <div>
                     <h4 class="mb-1 fw-bold">Sửa thông tin sinh viên</h4>
-                    <small class="text-muted">Điền đầy đủ thông tin để cập nhật hồ sơ</small>
                 </div>
                 <a href="?controller=student&action=index<?= $q !== '' ? '&q=' . urlencode($q) : '' ?>" class="popup-close" title="Đóng" aria-label="Đóng">
                     <i class="bi bi-x-lg"></i>
@@ -72,8 +71,7 @@
                 </div>
 
                 <hr class="my-4">
-                <h6 class="fw-bold mb-1">Thông tin bổ sung</h6>
-                <small class="text-muted d-block mb-3">Các trường dưới đây không bắt buộc</small>
+                <h6 class="fw-bold mb-1">Thông tin cá nhân</h6>
                 <div class="detail-grid">
                     <div>
                         <label for="nguoi_lien_he" class="form-label">Người liên hệ</label>

@@ -15,7 +15,6 @@
             <div class="popup-head">
                 <div>
                     <h4 id="student-detail-title" class="mb-1 fw-bold">Thông tin chi tiết sinh viên</h4>
-                    <small class="text-muted">Thông tin hồ sơ sinh viên</small>
                 </div>
                 <a href="<?= htmlspecialchars($backUrl, ENT_QUOTES, 'UTF-8') ?>"
                    class="popup-close" title="Quay lại" aria-label="Quay lại danh sách sinh viên">
@@ -61,8 +60,7 @@
                 </div>
 
                 <hr class="my-4">
-                <h6 class="fw-bold mb-1">Thông tin bổ sung</h6>
-                <small class="text-muted d-block mb-3">Thông tin cá nhân và liên hệ</small>
+                <h6 class="fw-bold mb-1">Thông tin cá nhân</h6>
                 <div class="detail-grid">
                     <div>
                         <label class="form-label">Người liên hệ</label>

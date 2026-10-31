@@ -43,7 +43,7 @@
         <div class="card-body">
             <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-3">
                 <div>
-                    <h2 class="h5 mb-1">Danh sách sinh viên</h2>
+                    <h2 class="h5 mb-1">Hồ sơ sinh viên</h2>
                     <div class="text-muted small">Tìm kiếm và quản lý hồ sơ nhanh chóng</div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
