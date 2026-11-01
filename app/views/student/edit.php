@@ -24,6 +24,9 @@
             </div>
 
             <div class="popup-body">
+                <?php if (!empty($error)): ?>
+                    <div class="alert alert-danger py-2" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+                <?php endif; ?>
                 <h6 class="fw-bold mb-3">Thông tin sinh viên</h6>
                 <div class="detail-grid">
                     <div>
@@ -32,38 +35,38 @@
                     </div>
                     <div>
                         <label for="ho_ten" class="form-label">Họ tên *</label>
-                        <input type="text" name="ho_ten" id="ho_ten" class="form-control" value="<?= htmlspecialchars($student->ho_ten ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+                        <input type="text" name="ho_ten" id="ho_ten" class="form-control" value="<?= htmlspecialchars($student->ho_ten ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="100" required>
                     </div>
                     <div>
                         <label for="ngay_sinh" class="form-label">Ngày sinh *</label>
-                        <input type="date" name="ngay_sinh" id="ngay_sinh" class="form-control" value="<?= htmlspecialchars($student->ngay_sinh ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="date" name="ngay_sinh" id="ngay_sinh" class="form-control" value="<?= htmlspecialchars($student->ngay_sinh ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
                     </div>
                     <div>
                         <label for="gioi_tinh" class="form-label">Giới tính *</label>
-                        <select name="gioi_tinh" id="gioi_tinh" class="form-control">
+                        <select name="gioi_tinh" id="gioi_tinh" class="form-control" required>
                             <option value="">-- Chọn --</option>
-                            <?php foreach (['Nam', 'Nữ', 'Khác'] as $value): ?>
+                            <?php foreach (['Nam', 'Nữ'] as $value): ?>
                                 <option value="<?= $value ?>" <?= ($student->gioi_tinh ?? '') === $value ? 'selected' : '' ?>><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div>
                         <label for="ten_lop" class="form-label">Tên lớp *</label>
-                        <input type="text" name="ten_lop" id="ten_lop" class="form-control" value="<?= htmlspecialchars($student->ten_lop ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="text" name="ten_lop" id="ten_lop" class="form-control" value="<?= htmlspecialchars($student->ten_lop ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="50" required>
                     </div>
                     <div>
                         <label for="nganh" class="form-label">Ngành *</label>
-                        <input type="text" name="nganh" id="nganh" class="form-control" value="<?= htmlspecialchars($student->nganh ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="text" name="nganh" id="nganh" class="form-control" value="<?= htmlspecialchars($student->nganh ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="100" required>
                     </div>
                     <div>
                         <label for="khoa" class="form-label">Khoa *</label>
-                        <input type="text" name="khoa" id="khoa" class="form-control" value="<?= htmlspecialchars($student->khoa ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="text" name="khoa" id="khoa" class="form-control" value="<?= htmlspecialchars($student->khoa ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="100" required>
                     </div>
                     <div>
                         <label for="trang_thai" class="form-label">Trạng thái *</label>
-                        <select name="trang_thai" id="trang_thai" class="form-control">
+                        <select name="trang_thai" id="trang_thai" class="form-control" required>
                             <option value="">-- Chọn --</option>
-                            <?php foreach (['Đang học', 'Bảo lưu', 'Thôi học', 'Đã tốt nghiệp'] as $value): ?>
+                            <?php foreach (['Đang học', 'Bảo lưu', 'Thôi học'] as $value): ?>
                                 <option value="<?= $value ?>" <?= ($student->trang_thai ?? '') === $value ? 'selected' : '' ?>><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>

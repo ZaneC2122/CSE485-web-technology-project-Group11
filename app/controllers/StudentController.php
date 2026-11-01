@@ -265,23 +265,121 @@ class StudentController
             exit('Không hỗ trợ phương thức này.');
         }
 
-        $fields = [
+        $requiredFields = [
             'ho_ten', 'ngay_sinh', 'gioi_tinh', 'ten_lop', 'nganh', 'khoa',
-            'trang_thai', 'cccd', 'ngay_cap_cccd', 'noi_cap_cccd', 'dan_toc',
+            'trang_thai'
+        ];
+        $additionalFields = [
+            'cccd', 'ngay_cap_cccd', 'noi_cap_cccd', 'dan_toc',
             'quoc_tich', 'dia_chi_thuong_tru', 'noi_o_hien_tai', 'ngay_nhap_hoc',
             'nguoi_lien_he', 'sdt_nguoi_lien_he', 'ghi_chu'
         ];
 
         $data = [];
-        foreach ($fields as $field) {
+        foreach (array_merge($requiredFields, $additionalFields) as $field) {
             $value = $_POST[$field] ?? '';
             $value = is_string($value) ? trim($value) : '';
             $data[$field] = $value !== '' ? $value : null;
         }
 
-        if ($data['ho_ten'] === null) {
+        $error = '';
+        foreach ($requiredFields as $field) {
+            if ($data[$field] === null) {
+                $error = 'Vui lòng điền đầy đủ các trường thông tin bắt buộc.';
+                break;
+            }
+        }
+
+        $maximumLengths = [
+            'ho_ten' => 100,
+            'ten_lop' => 50,
+            'nganh' => 100,
+            'khoa' => 100,
+            'cccd' => 12,
+            'noi_cap_cccd' => 100,
+            'dan_toc' => 50,
+            'quoc_tich' => 50,
+            'dia_chi_thuong_tru' => 200,
+            'noi_o_hien_tai' => 200,
+            'nguoi_lien_he' => 100,
+            'sdt_nguoi_lien_he' => 15,
+            'ghi_chu' => 200,
+        ];
+        foreach ($maximumLengths as $field => $maximumLength) {
+            if (
+                $error === ''
+                && $data[$field] !== null
+                && !preg_match('/^.{0,' . $maximumLength . '}$/us', $data[$field])
+            ) {
+                $error = 'Thông tin nhập vào vượt quá độ dài cho phép.';
+            }
+        }
+
+        if ($error === '' && !in_array($data['gioi_tinh'], ['Nam', 'Nữ'], true)) {
+            $error = 'Vui lòng chọn giới tính hợp lệ.';
+        }
+
+        if (
+            $error === ''
+            && !in_array(
+                $data['trang_thai'],
+                ['Đang học', 'Bảo lưu', 'Thôi học'],
+                true
+            )
+        ) {
+            $error = 'Vui lòng chọn trạng thái hợp lệ.';
+        }
+
+        if ($error === '') {
+            $date = DateTime::createFromFormat('!Y-m-d', $data['ngay_sinh']);
+            $dateErrors = DateTime::getLastErrors();
+            if (
+                !$date
+                || (
+                    $dateErrors !== false
+                    && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0)
+                )
+                || $date->format('Y-m-d') !== $data['ngay_sinh']
+            ) {
+                $error = 'Vui lòng nhập ngày sinh hợp lệ.';
+            }
+        }
+
+        foreach (['ngay_cap_cccd', 'ngay_nhap_hoc'] as $dateField) {
+            if ($error !== '' || $data[$dateField] === null) {
+                continue;
+            }
+
+            $date = DateTime::createFromFormat('!Y-m-d', $data[$dateField]);
+            $dateErrors = DateTime::getLastErrors();
+            if (
+                !$date
+                || (
+                    $dateErrors !== false
+                    && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0)
+                )
+                || $date->format('Y-m-d') !== $data[$dateField]
+            ) {
+                $error = 'Vui lòng nhập ngày tháng bổ sung hợp lệ.';
+            }
+        }
+
+        if ($error !== '') {
+            $studentService = new StudentService();
+            $student = $studentService->getStudentById($id);
+            if (!$student) {
+                http_response_code(404);
+                exit('Không tìm thấy sinh viên.');
+            }
+
+            foreach (array_merge($requiredFields, $additionalFields) as $field) {
+                $student->$field = $data[$field] ?? '';
+            }
+
+            $q = isset($_POST['q']) && is_string($_POST['q']) ? trim($_POST['q']) : '';
             http_response_code(422);
-            exit('Họ và tên không được để trống.');
+            include APP_ROOT . '/app/views/student/edit.php';
+            return;
         }
 
         $updated = (new StudentService())->updateStudent($id, $data);
