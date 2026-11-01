@@ -25,18 +25,18 @@
     <p class="auth-sub">Đăng nhập để tiếp tục đến bảng quản lý sinh viên.</p>
 
     <?php if ($success !== ''): ?>
-        <div class="alert alert-success py-2" role="status"><?= htmlspecialchars($success, ENT_QUOTES, 'UTF-8') ?></div>
+        <div class="alert alert-success py-2" role="status"><?= $success ?></div>
     <?php endif; ?>
 
     <?php if ($error !== ''): ?>
-        <div class="alert alert-danger py-2" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+        <div class="alert alert-danger py-2" role="alert"><?= $error ?></div>
     <?php endif; ?>
 
     <form method="post" action="<?= DOMAIN ?>?controller=user&action=login">
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" name="email" class="form-control"
-                   placeholder="ban@example.com" value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>"
+                   placeholder="ban@example.com" value="<?= $email ?>"
                    autocomplete="username" required autofocus>
         </div>
 

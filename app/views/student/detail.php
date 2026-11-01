@@ -16,7 +16,7 @@
                 <div>
                     <h4 id="student-detail-title" class="mb-1 fw-bold">Thông tin chi tiết sinh viên</h4>
                 </div>
-                <a href="<?= htmlspecialchars($backUrl, ENT_QUOTES, 'UTF-8') ?>"
+                <a href="<?= $backUrl ?>"
                    class="popup-close" title="Quay lại" aria-label="Quay lại danh sách sinh viên">
                     <i class="bi bi-x-lg"></i>
                 </a>
@@ -27,35 +27,35 @@
                 <div class="detail-grid">
                     <div>
                         <label class="form-label">Mã sinh viên</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->ma_sv ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->ma_sv ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Họ tên</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->ho_ten ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->ho_ten ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Ngày sinh</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars(Student::formatDate($student->ngay_sinh), ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= Student::formatDate($student->ngay_sinh) ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Giới tính</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->gioi_tinh ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->gioi_tinh ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Tên lớp</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->ten_lop ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->ten_lop ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Ngành</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->nganh ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->nganh ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Khoa</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->khoa ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->khoa ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Trạng thái</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->trang_thai ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->trang_thai ?? '' ?>" readonly>
                     </div>
                 </div>
 
@@ -64,53 +64,53 @@
                 <div class="detail-grid">
                     <div>
                         <label class="form-label">Người liên hệ</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->nguoi_lien_he ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->nguoi_lien_he ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->sdt_nguoi_lien_he ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->sdt_nguoi_lien_he ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Số CCCD</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->cccd ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->cccd ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Ngày cấp CCCD</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars(Student::formatDate($student->ngay_cap_cccd), ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= Student::formatDate($student->ngay_cap_cccd) ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Nơi cấp CCCD</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->noi_cap_cccd ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->noi_cap_cccd ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Dân tộc</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->dan_toc ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->dan_toc ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Quốc tịch</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->quoc_tich ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->quoc_tich ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Ngày nhập học</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars(Student::formatDate($student->ngay_nhap_hoc), ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= Student::formatDate($student->ngay_nhap_hoc) ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Địa chỉ thường trú</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->dia_chi_thuong_tru ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->dia_chi_thuong_tru ?? '' ?>" readonly>
                     </div>
                     <div>
                         <label class="form-label">Nơi ở hiện tại</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($student->noi_o_hien_tai ?? '', ENT_QUOTES, 'UTF-8') ?>" readonly>
+                        <input type="text" class="form-control" value="<?= $student->noi_o_hien_tai ?? '' ?>" readonly>
                     </div>
                     <div style="grid-column: 1 / -1;">
                         <label class="form-label">Ghi chú</label>
-                        <textarea class="form-control" rows="3" readonly><?= htmlspecialchars($student->ghi_chu ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                        <textarea class="form-control" rows="3" readonly><?= $student->ghi_chu ?? '' ?></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="popup-foot">
-                <a href="<?= htmlspecialchars($backUrl, ENT_QUOTES, 'UTF-8') ?>" class="btn btn-secondary">Quay lại</a>
+                <a href="<?= $backUrl ?>" class="btn btn-secondary">Quay lại</a>
             </div>
         </section>
     </div>

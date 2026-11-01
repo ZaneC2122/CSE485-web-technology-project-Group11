@@ -22,7 +22,7 @@
             <span class="fw-bold">Quản lý sinh viên</span>
         </div>
         <div class="d-flex align-items-center gap-3">
-            <span class="topbar-user">Xin chào, <strong><?= htmlspecialchars($_SESSION['user']['name'], ENT_QUOTES, 'UTF-8') ?></strong></span>
+            <span class="topbar-user">Xin chào, <strong><?= $_SESSION['user']['name'] ?></strong></span>
         <form method="post" action="<?= DOMAIN ?>?controller=user&action=logout" class="m-0">
             <button type="submit" class="btn btn-topbar">Đăng xuất</button>
         </form>
@@ -36,7 +36,7 @@
 </section>
 <main class="container pb-5">
     <?php if ($flash !== ''): ?>
-        <div class="alert alert-success" role="status"><?= htmlspecialchars($flash, ENT_QUOTES, 'UTF-8') ?></div>
+        <div class="alert alert-success" role="status"><?= $flash ?></div>
     <?php endif; ?>
 
     <div class="card list-card">
@@ -53,7 +53,7 @@
                             <i class="bi bi-search"></i>
                             <input type="search" name="q" class="form-control"
                                    placeholder="Tìm mã, tên, lớp, ngành…"
-                                   value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
+                                   value="<?= $q ?>">
                         </div>
                         <button type="submit" class="btn btn-icon btn-search" title="Tìm">
                             <i class="bi bi-search"></i>
@@ -114,8 +114,8 @@
                                            class="btn btn-icon btn-edit" title="Sửa"><i class="bi bi-pencil-square"></i></a>
                                         <button type="button" class="btn btn-icon btn-del delete-student-button"
                                                 title="Xóa"
-                                                data-student-id="<?= htmlspecialchars($student->ma_sv, ENT_QUOTES, 'UTF-8') ?>"
-                                                data-student-name="<?= htmlspecialchars($student->ho_ten, ENT_QUOTES, 'UTF-8') ?>">
+                                                data-student-id="<?= $student->ma_sv ?>"
+                                                data-student-name="<?= $student->ho_ten ?>">
                                             <i class="bi bi-trash3"></i>
                                         </button>
                                     </td>
@@ -154,7 +154,7 @@
             </div>
             <form method="post" action="<?= DOMAIN ?>?controller=student&action=delete" class="popup-foot" id="delete-student-form">
                 <input type="hidden" name="id" id="delete-student-id-input">
-                <input type="hidden" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
+                <input type="hidden" name="q" value="<?= $q ?>">
                 <button type="button" class="btn btn-light" data-close-delete-dialog>Hủy</button>
                 <button type="submit" class="btn btn-danger">
                     <i class="bi bi-trash3 me-1"></i>Xóa sinh viên

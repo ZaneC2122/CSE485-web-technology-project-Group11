@@ -25,7 +25,7 @@
     <p class="auth-sub">Đăng ký tài khoản để truy cập bảng quản lý sinh viên.</p>
 
     <?php if ($error !== ''): ?>
-        <div class="alert alert-danger py-2" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+        <div class="alert alert-danger py-2" role="alert"><?= $error ?></div>
     <?php endif; ?>
 
     <form method="post" action="<?= DOMAIN ?>?controller=user&action=register">
@@ -33,14 +33,14 @@
         <div class="mb-3">
             <label for="ho_ten" class="form-label">Họ và tên</label>
             <input type="text" id="ho_ten" name="ho_ten" class="form-control"
-                   placeholder="Nguyễn Văn A" value="<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>"
+                   placeholder="Nguyễn Văn A" value="<?= $name ?>"
                    maxlength="100" autocomplete="name" required autofocus>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" name="email" class="form-control"
-                   placeholder="ban@example.com" value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>"
+                   placeholder="ban@example.com" value="<?= $email ?>"
                    maxlength="100" autocomplete="email" required>
         </div>
 
