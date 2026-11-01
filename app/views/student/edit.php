@@ -34,11 +34,11 @@
                     </div>
                     <div>
                         <label for="ho_ten" class="form-label">Họ tên *</label>
-                        <input type="text" name="ho_ten" id="ho_ten" class="form-control" value="<?= htmlspecialchars($student->ho_ten ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="100" required>
+                        <input type="text" name="ho_ten" id="ho_ten" class="form-control" value="<?= htmlspecialchars($student->ho_ten ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="100" pattern="[^\d]+" title="Họ tên không được chứa chữ số" required>
                     </div>
                     <div>
                         <label for="ngay_sinh" class="form-label">Ngày sinh *</label>
-                        <input type="date" name="ngay_sinh" id="ngay_sinh" class="form-control" value="<?= htmlspecialchars($student->ngay_sinh ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+                        <input type="date" name="ngay_sinh" id="ngay_sinh" class="form-control" value="<?= htmlspecialchars($student->ngay_sinh ?? '', ENT_QUOTES, 'UTF-8') ?>" max="<?= date('Y-m-d') ?>" required>
                     </div>
                     <div>
                         <label for="gioi_tinh" class="form-label">Giới tính *</label>
@@ -81,15 +81,15 @@
                     </div>
                     <div>
                         <label for="sdt_nguoi_lien_he" class="form-label">Số điện thoại</label>
-                        <input type="text" name="sdt_nguoi_lien_he" id="sdt_nguoi_lien_he" class="form-control" value="<?= htmlspecialchars($student->sdt_nguoi_lien_he ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="tel" name="sdt_nguoi_lien_he" id="sdt_nguoi_lien_he" class="form-control" value="<?= htmlspecialchars($student->sdt_nguoi_lien_he ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="10" inputmode="numeric" pattern="0(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}" title="Nhập số điện thoại di động Việt Nam hợp lệ gồm 10 chữ số">
                     </div>
                     <div>
                         <label for="cccd" class="form-label">Số CCCD</label>
-                        <input type="text" name="cccd" id="cccd" class="form-control" value="<?= htmlspecialchars($student->cccd ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="text" name="cccd" id="cccd" class="form-control" value="<?= htmlspecialchars($student->cccd ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="12" inputmode="numeric" pattern="[0-9]{12}" title="Số CCCD phải gồm đúng 12 chữ số">
                     </div>
                     <div>
                         <label for="ngay_cap_cccd" class="form-label">Ngày cấp CCCD</label>
-                        <input type="date" name="ngay_cap_cccd" id="ngay_cap_cccd" class="form-control" value="<?= htmlspecialchars($student->ngay_cap_cccd ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="date" name="ngay_cap_cccd" id="ngay_cap_cccd" class="form-control" value="<?= htmlspecialchars($student->ngay_cap_cccd ?? '', ENT_QUOTES, 'UTF-8') ?>" max="<?= date('Y-m-d') ?>">
                     </div>
                     <div>
                         <label for="noi_cap_cccd" class="form-label">Nơi cấp CCCD</label>
@@ -105,7 +105,7 @@
                     </div>
                     <div>
                         <label for="ngay_nhap_hoc" class="form-label">Ngày nhập học</label>
-                        <input type="date" name="ngay_nhap_hoc" id="ngay_nhap_hoc" class="form-control" value="<?= htmlspecialchars($student->ngay_nhap_hoc ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="date" name="ngay_nhap_hoc" id="ngay_nhap_hoc" class="form-control" value="<?= htmlspecialchars($student->ngay_nhap_hoc ?? '', ENT_QUOTES, 'UTF-8') ?>" max="<?= date('Y-m-d') ?>">
                     </div>
                     <div>
                         <label for="dia_chi_thuong_tru" class="form-label">Địa chỉ thường trú</label>

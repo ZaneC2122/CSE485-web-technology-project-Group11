@@ -72,6 +72,9 @@ class StudentController
                 break;
             }
         }
+        if ($error === '') {
+            $error = $this->validateStudentData($data, true);
+        }
 
         if (
             $error === ''
@@ -289,6 +292,9 @@ class StudentController
                 break;
             }
         }
+        if ($error === '') {
+            $error = $this->validateStudentData($data, false);
+        }
 
         $maximumLengths = [
             'ho_ten' => 100,
@@ -400,5 +406,82 @@ class StudentController
 
         header('Location: ' . $redirect, true, 303);
         exit;
+    }
+
+    private function validateStudentData($data, $isCreate)
+    {
+        if ($isCreate && !preg_match('/^[A-Za-z0-9]{1,10}$/D', $data['ma_sv'])) {
+            return 'Mã sinh viên chỉ được nhập chữ và số, tối đa 10 ký tự.';
+        }
+
+        if (!preg_match('/^[\p{L}\s]+$/u', $data['ho_ten'])) {
+            return 'Họ tên chỉ được nhập chữ và khoảng trắng.';
+        }
+
+        if (!preg_match('/^[\p{L}0-9][\p{L}0-9\s.-]*$/u', $data['ten_lop'])) {
+            return 'Tên lớp không hợp lệ.';
+        }
+
+        foreach (['nganh', 'khoa'] as $field) {
+            if (!preg_match('/^[\p{L}0-9][\p{L}0-9\s.,()\/-]*$/u', $data[$field])) {
+                return 'Ngành và khoa chỉ được nhập chữ, số và ký tự tên hợp lệ.';
+            }
+        }
+
+        if ($data['cccd'] !== null && !preg_match('/^[0-9]{12}$/D', $data['cccd'])) {
+            return 'Số CCCD phải gồm đúng 12 chữ số.';
+        }
+
+        if ($data['sdt_nguoi_lien_he'] !== null
+            && !preg_match('/^0(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$/D', $data['sdt_nguoi_lien_he'])
+        ) {
+            return 'Số điện thoại phải gồm 10 chữ số và bắt đầu bằng 03, 05, 07, 08 hoặc 09.';
+        }
+
+        foreach (['dan_toc', 'quoc_tich', 'nguoi_lien_he'] as $field) {
+            if ($data[$field] !== null && !preg_match('/^[\p{L}\s.]+$/u', $data[$field])) {
+                return 'Dân tộc, quốc tịch và người liên hệ chỉ được nhập chữ.';
+            }
+        }
+
+        $birthDate = $this->parseValidDate($data['ngay_sinh']);
+        if (!$birthDate) {
+            return 'Vui lòng nhập ngày sinh hợp lệ.';
+        }
+        $today = new DateTimeImmutable('today');
+        if ($birthDate >= $today) {
+            return 'Ngày sinh phải nhỏ hơn ngày hiện tại.';
+        }
+
+        foreach (['ngay_cap_cccd', 'ngay_nhap_hoc'] as $field) {
+            if ($data[$field] === null) {
+                continue;
+            }
+            $date = $this->parseValidDate($data[$field]);
+            if (!$date) {
+                return 'Ngày cấp CCCD và ngày nhập học phải hợp lệ.';
+            }
+            if ($date > $today) {
+                return 'Ngày cấp CCCD và ngày nhập học không được vượt quá ngày hiện tại.';
+            }
+            if ($date < $birthDate) {
+                return 'Ngày cấp CCCD và ngày nhập học không được trước ngày sinh.';
+            }
+        }
+
+        return '';
+    }
+
+    private function parseValidDate($value)
+    {
+        if (!is_string($value) || $value === '') {
+            return null;
+        }
+        $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value);
+        $errors = DateTimeImmutable::getLastErrors();
+        if (!$date || ($errors !== false && ($errors['warning_count'] > 0 || $errors['error_count'] > 0))) {
+            return null;
+        }
+        return $date->format('Y-m-d') === $value ? $date : null;
     }
 }

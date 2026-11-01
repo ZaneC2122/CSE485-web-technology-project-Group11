@@ -34,18 +34,20 @@
                         <label for="ma_sv" class="form-label">Mã sinh viên *</label>
                         <input type="text" name="ma_sv" id="ma_sv" class="form-control"
                                value="<?= htmlspecialchars($data['ma_sv'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                               maxlength="10" required autofocus>
+                               maxlength="10" pattern="[A-Za-z0-9]{1,10}" title="Mã sinh viên chỉ được nhập chữ và số, tối đa 10 ký tự"
+                               required autofocus>
                     </div>
                     <div>
                         <label for="ho_ten" class="form-label">Họ tên *</label>
                         <input type="text" name="ho_ten" id="ho_ten" class="form-control"
                                value="<?= htmlspecialchars($data['ho_ten'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                               maxlength="100" required>
+                               maxlength="100" pattern="[^\d]+" title="Họ tên không được chứa chữ số" required>
                     </div>
                     <div>
                         <label for="ngay_sinh" class="form-label">Ngày sinh *</label>
                         <input type="date" name="ngay_sinh" id="ngay_sinh" class="form-control"
-                               value="<?= htmlspecialchars($data['ngay_sinh'] ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+                               value="<?= htmlspecialchars($data['ngay_sinh'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               max="<?= date('Y-m-d') ?>" required>
                     </div>
                     <div>
                         <label for="gioi_tinh" class="form-label">Giới tính *</label>
@@ -98,12 +100,13 @@
                         <label for="cccd" class="form-label">Căn cước công dân</label>
                         <input type="text" name="cccd" id="cccd" class="form-control"
                                value="<?= htmlspecialchars($data['cccd'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                               maxlength="12">
+                               maxlength="12" inputmode="numeric" pattern="[0-9]{12}" title="Số CCCD phải gồm đúng 12 chữ số">
                     </div>
                     <div>
                         <label for="ngay_cap_cccd" class="form-label">Ngày cấp CCCD</label>
                         <input type="date" name="ngay_cap_cccd" id="ngay_cap_cccd" class="form-control"
-                               value="<?= htmlspecialchars($data['ngay_cap_cccd'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                               value="<?= htmlspecialchars($data['ngay_cap_cccd'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               max="<?= date('Y-m-d') ?>">
                     </div>
                     <div>
                         <label for="noi_cap_cccd" class="form-label">Nơi cấp CCCD</label>
@@ -138,7 +141,8 @@
                     <div>
                         <label for="ngay_nhap_hoc" class="form-label">Ngày nhập học</label>
                         <input type="date" name="ngay_nhap_hoc" id="ngay_nhap_hoc" class="form-control"
-                               value="<?= htmlspecialchars($data['ngay_nhap_hoc'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                               value="<?= htmlspecialchars($data['ngay_nhap_hoc'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                               max="<?= date('Y-m-d') ?>">
                     </div>
                     <div>
                         <label for="nguoi_lien_he" class="form-label">Người liên hệ</label>
@@ -150,7 +154,8 @@
                         <label for="sdt_nguoi_lien_he" class="form-label">Số điện thoại người liên hệ</label>
                         <input type="tel" name="sdt_nguoi_lien_he" id="sdt_nguoi_lien_he" class="form-control"
                                value="<?= htmlspecialchars($data['sdt_nguoi_lien_he'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                               maxlength="15">
+                               maxlength="10" inputmode="numeric" pattern="0(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}"
+                               title="Nhập số điện thoại 10 chữ số, bắt đầu bằng 03, 05, 07, 08 hoặc 09">
                     </div>
                     <div style="grid-column: 1 / -1;">
                         <label for="ghi_chu" class="form-label">Ghi chú</label>
