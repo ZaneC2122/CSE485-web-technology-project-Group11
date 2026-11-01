@@ -11,7 +11,6 @@
 <body class="dash-page">
     <div class="popup">
         <form class="popup-card popup-form" action="?controller=student&action=update&id=<?= urlencode($student->ma_sv) ?>" method="post">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>">
 
             <div class="popup-head">
